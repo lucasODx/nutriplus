@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="GradleSettings">
+    <option name="linkedExternalProjectsSettings">
+      <GradleProjectSettings>
+        <option name="externalProjectPath" value="$PROJECT_DIR$/controle_nutricional" />
+        <option name="gradleJvm" value="26" />
+      </GradleProjectSettings>
+      <GradleProjectSettings>
+        <option name="externalProjectPath" value="$PROJECT_DIR$/pratica_nutricional" />
+        <option name="gradleJvm" value="26 (3)" />
+      </GradleProjectSettings>
+      <GradleProjectSettings>
+        <option name="externalProjectPath" value="$PROJECT_DIR$/tabela_nutricional" />
+        <option name="gradleJvm" value="26 (2)" />
+      </GradleProjectSettings>
+    </option>
+  </component>
+</project>

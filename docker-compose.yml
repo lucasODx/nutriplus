@@ -1,0 +1,77 @@
+services:
+  controle_nutricional:
+    build:
+      context: ./controle_nutricional
+      dockerfile: ./Dockerfile
+    container_name: controle_nutricional
+    hostname: controle_nutricional
+    restart: always
+    volumes:
+      - ./controle_nutricional:/service
+    ports:
+      - "8081:8080"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres-db:5432/nutriplusdb
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=123
+    depends_on:
+      - postgres-db
+    networks:
+      - rede-nutriplus
+
+  tabela_nutricional:
+    build:
+      context: ./tabela_nutricional
+      dockerfile: ./Dockerfile
+    container_name: tabela_nutricional
+    hostname: tabela_nutricional
+    restart: always
+    volumes:
+      - ./tabela_nutricional:/service
+    ports:
+      - "8082:8080"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres-db:5432/nutriplusdb
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=123
+    depends_on:
+      - postgres-db
+    networks:
+      - rede-nutriplus
+
+  pratica_nutricional:
+    build:
+      context: ./pratica_nutricional
+      dockerfile: ./Dockerfile
+    container_name: pratica_nutricional
+    hostname: pratica_nutricional
+    restart: always
+    volumes:
+      - ./pratica_nutricional:/service
+    ports:
+      - "8083:8080"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres-db:5432/nutriplusdb
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=123
+    depends_on:
+      - postgres-db
+    networks:
+      - rede-nutriplus
+
+  postgres-db:
+    image: postgres:16-alpine
+    environment:
+      - POSTGRES_DB=nutriplusdb
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=123
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:
+
+networks:
+  rede-nutriplus:

@@ -1,5 +1,5 @@
 
-package com.nutriplus.controle_nutricional.controller; 
+package com.nutriplus.tabela_nutricional.controller; 
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;

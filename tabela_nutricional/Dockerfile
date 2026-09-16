@@ -1,13 +1,15 @@
 # Build
-FROM gradle:8.14-jdk17-alpine AS build
+FROM eclipse-temurin:26-jdk-alpine AS build
 WORKDIR /app
-COPY build.gradle settings.gradle ./
-COPY src ./src
-RUN gradle bootJar --no-daemon -x test
+COPY gradlew settings.gradle build.gradle ./
+COPY gradle gradle
+RUN chmod +x gradlew
+COPY src src
+RUN ./gradlew build -x test --no-daemon
 
 # Run
-FROM eclipse-temurin:17-jre-alpine
+FROM eclipse-temurin:26-jre-alpine
 WORKDIR /app
-COPY --from=build /app/build/libs/*.jar app.jar
+COPY --from=build /app/build/libs/app.jar app.jar
 EXPOSE 8080
 ENTRYPOINT ["java", "-jar", "app.jar"]

@@ -1,17 +1,17 @@
 package com.nutriplus.controle_nutricional.controller;
 
-import com.nutriplus.controle_nutricional.entity.Alimento;
-import com.nutriplus.controle_nutricional.repository.AlimentoRepository;
+import com.nutriplus.controle_nutricional.dto.AlimentoRequestDTO;
+import com.nutriplus.controle_nutricional.dto.AlimentoResponseDTO;
 import com.nutriplus.controle_nutricional.service.AlimentoService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/alimentos")
+@RequestMapping("/api/alimentos")
 public class AlimentoController {
 
     private final AlimentoService service;
@@ -21,8 +21,13 @@ public class AlimentoController {
     }
 
     @PostMapping
-    public ResponseEntity<Alimento> save(@RequestBody Alimento alimento) {
-        Alimento saved = service.save(alimento);
+    public ResponseEntity<AlimentoResponseDTO> save(@Valid @RequestBody AlimentoRequestDTO dto) {
+        AlimentoResponseDTO saved = service.create(dto);
         return ResponseEntity.status(HttpStatus.CREATED).body(saved);
+    }
+
+    @GetMapping
+    public List<AlimentoResponseDTO> findAll() {
+        return service.findAll();
     }
 }

@@ -15,10 +15,20 @@
       <GradleProjectSettings>
         <option name="externalProjectPath" value="$PROJECT_DIR$/pratica_nutricional" />
         <option name="gradleJvm" value="26 (3)" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/pratica_nutricional" />
+          </set>
+        </option>
       </GradleProjectSettings>
       <GradleProjectSettings>
         <option name="externalProjectPath" value="$PROJECT_DIR$/tabela_nutricional" />
         <option name="gradleJvm" value="26 (2)" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/tabela_nutricional" />
+          </set>
+        </option>
       </GradleProjectSettings>
     </option>
   </component>

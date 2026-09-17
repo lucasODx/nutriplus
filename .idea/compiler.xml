@@ -5,6 +5,12 @@
       <module name="controle_nutricional" options="-parameters" />
       <module name="controle_nutricional.main" options="-parameters" />
       <module name="controle_nutricional.test" options="-parameters" />
+      <module name="pratica_nutricional" options="-parameters" />
+      <module name="pratica_nutricional.main" options="-parameters" />
+      <module name="pratica_nutricional.test" options="-parameters" />
+      <module name="tabela_nutricional" options="-parameters" />
+      <module name="tabela_nutricional.main" options="-parameters" />
+      <module name="tabela_nutricional.test" options="-parameters" />
     </option>
   </component>
 </project>

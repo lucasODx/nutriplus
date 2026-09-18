@@ -12,7 +12,6 @@ public record DiarioAlimentarResponseDTO(
         TipoRefeicaoEnum tipoRefeicao,
         Long alimentoId,
         BigDecimal quantidadeGramas,
-        BigDecimal caloriasCalculadas,
         LocalDateTime criadoEm
 ) {
 }

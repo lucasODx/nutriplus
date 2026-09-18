@@ -1,5 +1,5 @@
 DO $$ BEGIN
-    CREATE TYPE tipo_refeicao_enum AS ENUM ('CAFE_MANHA', 'ALMOCO', 'LANCHE', 'JANTAR', 'CEIA');
+    CREATE TYPE tipo_refeicao_enum AS ENUM ('CAFE_MANHA', 'ALMOCO', 'LANCHE_MANHA', 'JANTAR', 'CEIA');
 EXCEPTION
     WHEN duplicate_object THEN null;
 END $$;
@@ -29,7 +29,6 @@ CREATE TABLE IF NOT EXISTS diario_alimentar (
                                                 tipo_refeicao tipo_refeicao_enum NOT NULL,
                                                 alimento_id BIGINT NOT NULL,
                                                 quantidade_gramas DECIMAL(8,2) NOT NULL,
-                                                calorias_calculadas DECIMAL(8,2) NOT NULL,
                                                 criado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -102,10 +101,10 @@ INSERT INTO alimentos (nome, categoria, calorias_por_100g, proteinas_100g, carbo
                                                                                                                                    ('Castanha do Pará', 'Oleaginosas', 650.00, 14.00, 12.00, 66.00, 'BAIXO'),
                                                                                                                                    ('Doces e Açúcar Refinado', 'Sobremesas', 387.00, 0.00, 99.00, 0.00, 'ALTO');
 
-INSERT INTO diario_alimentar (usuario_id, data_refeicao, tipo_refeicao, alimento_id, quantidade_gramas, calorias_calculadas) VALUES
-                                                                                                                                 (1, NOW() - INTERVAL '4 hours', 'ALMOCO', 1, 150.00, 195.00),
-                                                                                                                                 (1, NOW() - INTERVAL '4 hours', 'ALMOCO', 2, 100.00, 165.00),
-                                                                                                                                 (1, NOW() - INTERVAL '1 hour', 'LANCHE', 3, 30.00, 180.00);
+INSERT INTO diario_alimentar (usuario_id, data_refeicao, tipo_refeicao, alimento_id, quantidade_gramas) VALUES
+                                                                                                                                 (1, NOW() - INTERVAL '4 hours', 'ALMOCO', 1, 150.00),
+                                                                                                                                 (1, NOW() - INTERVAL '4 hours', 'ALMOCO', 2, 100.00),
+                                                                                                                                 (1, NOW() - INTERVAL '1 hour', 'LANCHE_MANHA', 3, 30.00);
 
 INSERT INTO contraindicacoes_alimento (alimento_id, condicao_medica) VALUES
     (4, 'glicemia_alta');

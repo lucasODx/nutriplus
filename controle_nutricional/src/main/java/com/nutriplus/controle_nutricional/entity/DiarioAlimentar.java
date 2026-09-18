@@ -34,9 +34,6 @@ public class DiarioAlimentar {
     @Column(name = "quantidade_gramas", nullable = false, precision = 8, scale = 2)
     private BigDecimal quantidadeGramas;
 
-    @Column(name = "calorias_calculadas", nullable = false, precision = 8, scale = 2)
-    private BigDecimal caloriasCalculadas;
-
     @CreationTimestamp
     @Column(name = "criado_em", updatable = false)
     private LocalDateTime criadoEm;
@@ -90,14 +87,6 @@ public class DiarioAlimentar {
 
     public void setQuantidadeGramas(BigDecimal quantidadeGramas) {
         this.quantidadeGramas = quantidadeGramas;
-    }
-
-    public BigDecimal getCaloriasCalculadas() {
-        return caloriasCalculadas;
-    }
-
-    public void setCaloriasCalculadas(BigDecimal caloriasCalculadas) {
-        this.caloriasCalculadas = caloriasCalculadas;
     }
 
     public LocalDateTime getCriadoEm() {

@@ -15,16 +15,23 @@ import java.util.List;
 @Service
 public class ContraindicacaoAlimentoService {
 
+    private final AlimentoRepository alimentoRepository;
     private final ContraindicacaoAlimentoRepository repository;
     private final ContraindicacaoAlimentoMapper mapper;
 
     public ContraindicacaoAlimentoService(ContraindicacaoAlimentoRepository repository, ContraindicacaoAlimentoMapper mapper, AlimentoRepository alimentoRepository) {
         this.repository = repository;
         this.mapper = mapper;
+        this.alimentoRepository = alimentoRepository;
     }
 
     public ContraindicacaoAlimentoResponseDTO create(ContraindicacaoAlimentoRequestDTO dto) {
+        Alimento alimento = alimentoRepository.findById(dto.alimentoId())
+                .orElseThrow(() -> new NotFoundException(
+                        "Dado não encontrado!"));
+
         ContraindicacaoAlimento contraIndicacaoAlimento = this.mapper.toEntity(dto);
+        contraIndicacaoAlimento.setAlimento(alimento);
         return mapper.toResponseDTO(repository.save(contraIndicacaoAlimento));
     }
 

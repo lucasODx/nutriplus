@@ -24,8 +24,5 @@ public record DiarioAlimentarRequestDTO(
         @NotNull(message = "A quantidade em gramas é obrigatória")
         @DecimalMin(value = "0.01", message = "A quantidade deve ser maior que zero")
         BigDecimal quantidadeGramas
-
-        // calorias_calculadas não entra aqui de propósito: é calculada no
-        // service com base no alimento e na quantidade, não vem do cliente.
 ) {
 }

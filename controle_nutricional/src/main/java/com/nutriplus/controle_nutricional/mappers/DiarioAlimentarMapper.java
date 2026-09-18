@@ -13,6 +13,7 @@ public class DiarioAlimentarMapper {
         diario.setUsuarioId(dto.usuarioId());
         diario.setDataRefeicao(dto.dataRefeicao());
         diario.setTipoRefeicao(dto.tipoRefeicao());
+        diario.setAlimentoId(dto.alimentoId());
         diario.setQuantidadeGramas(dto.quantidadeGramas());
         return diario;
     }
@@ -25,7 +26,6 @@ public class DiarioAlimentarMapper {
                 diario.getTipoRefeicao(),
                 diario.getAlimentoId(),
                 diario.getQuantidadeGramas(),
-                diario.getCaloriasCalculadas(),
                 diario.getCriadoEm()
         );
     }

@@ -9,7 +9,7 @@ public class HomeController {
 
     String service_name = "tabela_nutricional";
 
-    @GetMapping("/")
+    @GetMapping("/api")
     public String healthCheck() {
         return String.format("O serviço %s está rodando", service_name);
     }

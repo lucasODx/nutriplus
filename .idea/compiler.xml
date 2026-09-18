@@ -1,7 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="CompilerConfiguration">
+    <bytecodeTargetLevel>
+      <module name="com.nutriplus.controle_nutricional" target="26" />
+      <module name="com.nutriplus.controle_nutricional.main" target="26" />
+      <module name="com.nutriplus.controle_nutricional.test" target="26" />
+      <module name="pratica_nutricional" target="26" />
+    </bytecodeTargetLevel>
+  </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="com.nutriplus.controle_nutricional" options="-parameters" />
+      <module name="com.nutriplus.controle_nutricional.main" options="-parameters" />
+      <module name="com.nutriplus.controle_nutricional.test" options="-parameters" />
       <module name="controle_nutricional" options="-parameters" />
       <module name="controle_nutricional.main" options="-parameters" />
       <module name="controle_nutricional.test" options="-parameters" />

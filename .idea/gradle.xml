@@ -13,6 +13,15 @@
         </option>
       </GradleProjectSettings>
       <GradleProjectSettings>
+        <option name="externalProjectPath" value="$PROJECT_DIR$/mcp_nutriplus" />
+        <option name="gradleJvm" value="26 (2)" />
+        <option name="modules">
+          <set>
+            <option value="$PROJECT_DIR$/mcp_nutriplus" />
+          </set>
+        </option>
+      </GradleProjectSettings>
+      <GradleProjectSettings>
         <option name="externalProjectPath" value="$PROJECT_DIR$/pratica_nutricional" />
         <option name="gradleJvm" value="26 (3)" />
         <option name="modules">

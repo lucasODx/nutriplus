@@ -5,7 +5,6 @@
       <module name="com.nutriplus.controle_nutricional" target="26" />
       <module name="com.nutriplus.controle_nutricional.main" target="26" />
       <module name="com.nutriplus.controle_nutricional.test" target="26" />
-      <module name="pratica_nutricional" target="26" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
@@ -16,6 +15,9 @@
       <module name="controle_nutricional" options="-parameters" />
       <module name="controle_nutricional.main" options="-parameters" />
       <module name="controle_nutricional.test" options="-parameters" />
+      <module name="mcp_nutriplus" options="-parameters" />
+      <module name="mcp_nutriplus.main" options="-parameters" />
+      <module name="mcp_nutriplus.test" options="-parameters" />
       <module name="pratica_nutricional" options="-parameters" />
       <module name="pratica_nutricional.main" options="-parameters" />
       <module name="pratica_nutricional.test" options="-parameters" />

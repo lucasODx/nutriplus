@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Nutri+ Client</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🥗</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0F1518;
+    --panel: #161E22;
+    --elevated: #1D272C;
+    --border: #263136;
+    --text: #E7EEEC;
+    --text-muted: #839194;
+    --accent: #8FCB7E;
+    --accent-dim: #4F6B48;
+    --amber: #E3A857;
+    --error: #E2685C;
+    --mono: "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
+    --sans: "Inter", system-ui, -apple-system, sans-serif;
+    box-sizing: border-box;
+  }
+  @media (prefers-color-scheme: light) {
+    :root:not([data-theme="dark"]) {
+      --bg: #F3F1EB;
+      --panel: #FFFFFF;
+      --elevated: #FAF9F5;
+      --border: #DEDACF;
+      --text: #1C2320;
+      --text-muted: #6B7570;
+      --accent: #3F7A34;
+      --accent-dim: #CFE3C6;
+      --amber: #A9701F;
+      --error: #B23A2E;
+    }
+  }
+  :root[data-theme="light"] {
+    --bg: #F3F1EB;
+    --panel: #FFFFFF;
+    --elevated: #FAF9F5;
+    --border: #DEDACF;
+    --text: #1C2320;
+    --text-muted: #6B7570;
+    --accent: #3F7A34;
+    --accent-dim: #CFE3C6;
+    --amber: #A9701F;
+    --error: #B23A2E;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    height: 100%;
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  body {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow: hidden;
+  }
+
+  header {
+    display: flex;
+    align-items: center;
+    gap: .75rem;
+    padding: .85rem 1rem;
+    border-bottom: 1px solid var(--border);
+    background: var(--panel);
+    flex-wrap: wrap;
+  }
+  .brand {
+    display: flex;
+    align-items: baseline;
+    gap: .5rem;
+    font-weight: 700;
+    font-size: 1.05rem;
+    white-space: nowrap;
+  }
+  .brand small {
+    font-family: var(--mono);
+    font-weight: 500;
+    font-size: .72rem;
+    color: var(--text-muted);
+  }
+  .baseurl-wrap {
+    display: flex;
+    align-items: center;
+    gap: .4rem;
+    flex: 1;
+    min-width: 220px;
+  }
+  .baseurl-wrap label {
+    font-size: .72rem;
+    color: var(--text-muted);
+    white-space: nowrap;
+  }
+  #baseUrl {
+    flex: 1;
+    font-family: var(--mono);
+    font-size: .82rem;
+    background: var(--elevated);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: .45rem .6rem;
+    border-radius: 6px;
+    min-width: 0;
+  }
+
+  #baseUrl:focus { outline: 2px solid var(--accent-dim); outline-offset: 1px; }
+  #clearLog {
+    font-family: var(--sans);
+    font-size: .78rem;
+    background: none;
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    padding: .45rem .7rem;
+    border-radius: 6px;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  #clearLog:hover { color: var(--text); border-color: var(--text-muted); }
+
+  .layout {
+    flex: 1;
+    display: flex;
+    min-height: 0;
+  }
+
+  aside {
+    width: 250px;
+    flex-shrink: 0;
+    border-right: 1px solid var(--border);
+    background: var(--panel);
+    overflow-y: auto;
+    padding: .85rem .6rem;
+  }
+  aside h2 {
+    font-size: .68rem;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+    color: var(--text-muted);
+    margin: .6rem .4rem .4rem;
+    font-weight: 600;
+  }
+  aside h2:first-child { margin-top: 0; }
+  .route-btn {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    width: 100%;
+    background: none;
+    border: none;
+    color: var(--text);
+    text-align: left;
+    padding: .4rem .4rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-family: var(--mono);
+    font-size: .74rem;
+    line-height: 1.3;
+  }
+  .route-btn:hover { background: var(--elevated); }
+  .m-tag {
+    flex-shrink: 0;
+    display: inline-block;
+    width: 3.2em;
+    font-weight: 700;
+    font-size: .68rem;
+    padding: .1rem 0;
+    text-align: center;
+    border-radius: 4px;
+  }
+  .m-GET { color: #6FA8DC; background: rgba(111,168,220,.12); }
+  .m-POST { color: var(--accent); background: rgba(143,203,126,.12); }
+  .route-path { color: var(--text-muted); word-break: break-all; }
+
+  main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+  #log {
+    flex: 1;
+    overflow-y: auto;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: .55rem;
+  }
+  .empty-state {
+    margin: auto;
+    text-align: center;
+    color: var(--text-muted);
+    font-size: .85rem;
+    max-width: 320px;
+    line-height: 1.5;
+  }
+  .bubble {
+    max-width: 80%;
+    font-family: var(--mono);
+    font-size: .78rem;
+    line-height: 1.5;
+    border-radius: 10px;
+    padding: .6rem .75rem;
+    white-space: pre-wrap;
+    word-break: break-word;
+    border: 1px solid var(--border);
+  }
+  .bubble.request {
+    align-self: flex-end;
+    background: var(--accent-dim);
+    color: var(--text);
+    border-color: transparent;
+  }
+  :root:not([data-theme="dark"]) .bubble.request { color: #1C2320; }
+  .bubble.response { align-self: flex-start; background: var(--panel); }
+  .bubble.error { align-self: flex-start; background: var(--panel); border-color: var(--error); }
+  .bubble .meta {
+    font-family: var(--sans);
+    font-weight: 600;
+    font-size: .68rem;
+    text-transform: uppercase;
+    letter-spacing: .03em;
+    margin-bottom: .3rem;
+    display: flex;
+    gap: .4rem;
+    align-items: center;
+  }
+  .status-ok { color: var(--accent); }
+  .status-err { color: var(--error); }
+  .status-pending { color: var(--amber); }
+
+  #composer {
+    border-top: 1px solid var(--border);
+    background: var(--panel);
+    padding: .75rem 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+  }
+  .composer-row {
+    display: flex;
+    gap: .5rem;
+  }
+  #method {
+    font-family: var(--mono);
+    font-weight: 600;
+    font-size: .82rem;
+    background: var(--elevated);
+    border: 1px solid var(--border);
+    color: var(--accent);
+    padding: 0 .5rem;
+    border-radius: 6px;
+  }
+  #route {
+    flex: 1;
+    font-family: var(--mono);
+    font-size: .82rem;
+    background: var(--elevated);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: .5rem .6rem;
+    border-radius: 6px;
+    min-width: 0;
+  }
+  #route:focus, #method:focus, #jsonBody:focus { outline: 2px solid var(--accent-dim); outline-offset: 1px; }
+  #sendBtn {
+    font-family: var(--sans);
+    font-weight: 600;
+    font-size: .82rem;
+    background: var(--accent);
+    color: #10240D;
+    border: none;
+    padding: 0 1.1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  #sendBtn:disabled { opacity: .5; cursor: default; }
+  #sendBtn:hover:not(:disabled) { filter: brightness(1.05); }
+  #jsonBody {
+    width: 100%;
+    min-height: 5.5em;
+    max-height: 30vh;
+    font-family: var(--mono);
+    font-size: .8rem;
+    background: var(--elevated);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: .55rem .65rem;
+    border-radius: 8px;
+    resize: vertical;
+  }
+  #jsonBody.hidden { display: none; }
+  .hint {
+    font-size: .68rem;
+    color: var(--text-muted);
+    font-family: var(--mono);
+  }
+  .json-error {
+    color: var(--error);
+    font-size: .7rem;
+    font-family: var(--mono);
+    min-height: 1em;
+  }
+
+  @media (max-width: 720px) {
+    aside {
+      position: fixed;
+      z-index: 5;
+      top: 0; bottom: 0; left: 0;
+      transform: translateX(-100%);
+      transition: transform .2s ease;
+      width: 78vw;
+      max-width: 300px;
+      padding-top: calc(.85rem + env(safe-area-inset-top, 0px));
+    }
+    aside.open { transform: translateX(0); box-shadow: 4px 0 24px rgba(0,0,0,.4); }
+    #menuBtn { display: inline-flex !important; }
+    .bubble { max-width: 92%; }
+    #overlay {
+      display: none;
+      position: fixed; inset: 0; background: rgba(0,0,0,.4); z-index: 4;
+    }
+    #overlay.open { display: block; }
+  }
+  #menuBtn {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    width: 2rem; height: 2rem;
+    background: none;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    color: var(--text);
+    cursor: pointer;
+    font-size: 1rem;
+    flex-shrink: 0;
+  }
+
+  ::-webkit-scrollbar { width: 10px; height: 10px; }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 6px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+</style>
+</head>
+<body>
+
+<header>
+  <button id="menuBtn" aria-label="Abrir rotas">☰</button>
+  <div class="brand">Nutri+<small>API Console</small></div>
+  <div class="baseurl-wrap">
+    <label for="baseUrl">Base URL</label>
+    <input id="baseUrl" type="text" value="http://localhost:8081" spellcheck="false">
+  </div>
+  <button id="clearLog">Limpar</button>
+</header>
+
+<div class="layout">
+  <div id="overlay"></div>
+  <aside id="sidebar">
+    <h2>Home</h2>
+    <button class="route-btn" data-method="GET" data-route="/api"><span class="m-tag m-GET">GET</span><span class="route-path">/api</span></button>
+
+    <h2>Alimentos</h2>
+    <button class="route-btn" data-method="GET" data-route="/api/alimentos"><span class="m-tag m-GET">GET</span><span class="route-path">/api/alimentos</span></button>
+    <button class="route-btn" data-method="POST" data-route="/api/alimentos" data-body='{\n  "nome": "Banana",\n  "calorias": 89\n}'><span class="m-tag m-POST">POST</span><span class="route-path">/api/alimentos</span></button>
+
+    <h2>Contraindicações</h2>
+    <button class="route-btn" data-method="GET" data-route="/api/contraindicacoes-alimentos"><span class="m-tag m-GET">GET</span><span class="route-path">/api/contraindicacoes-alimentos</span></button>
+    <button class="route-btn" data-method="POST" data-route="/api/contraindicacoes-alimentos" data-body='{\n  "alimentoId": 1,\n  "descricao": "Alergia a lactose"\n}'><span class="m-tag m-POST">POST</span><span class="route-path">/api/contraindicacoes-alimentos</span></button>
+
+    <h2>Diário alimentar</h2>
+    <button class="route-btn" data-method="GET" data-route="/api/diarios-alimentares"><span class="m-tag m-GET">GET</span><span class="route-path">/api/diarios-alimentares</span></button>
+    <button class="route-btn" data-method="POST" data-route="/api/diarios-alimentares" data-body='{\n  "data": "2026-09-20",\n  "alimentoId": 1,\n  "quantidade": 100\n}'><span class="m-tag m-POST">POST</span><span class="route-path">/api/diarios-alimentares</span></button>
+
+    <h2>Metas nutricionais</h2>
+    <button class="route-btn" data-method="GET" data-route="/api/metas-nutricionais"><span class="m-tag m-GET">GET</span><span class="route-path">/api/metas-nutricionais</span></button>
+    <button class="route-btn" data-method="POST" data-route="/api/metas-nutricionais" data-body='{\n  "descricao": "Perder peso",\n  "caloriasAlvo": 1800\n}'><span class="m-tag m-POST">POST</span><span class="route-path">/api/metas-nutricionais</span></button>
+
+    <h2>Receitas</h2>
+    <button class="route-btn" data-method="GET" data-route="/api/receitas"><span class="m-tag m-GET">GET</span><span class="route-path">/api/receitas</span></button>
+    <button class="route-btn" data-method="GET" data-route="/api/receitas?dificuldade=FACIL"><span class="m-tag m-GET">GET</span><span class="route-path">/api/receitas?dificuldade=FACIL</span></button>
+    <button class="route-btn" data-method="GET" data-route="/api/receitas?nome=bolo"><span class="m-tag m-GET">GET</span><span class="route-path">/api/receitas?nome=bolo</span></button>
+    <button class="route-btn" data-method="POST" data-route="/api/receitas" data-body='{\n  "nome": "Bolo de cenoura",\n  "dificuldade": "FACIL"\n}'><span class="m-tag m-POST">POST</span><span class="route-path">/api/receitas</span></button>
+
+    <h2>Registros de exercício</h2>
+    <button class="route-btn" data-method="GET" data-route="/api/registros-exercicios"><span class="m-tag m-GET">GET</span><span class="route-path">/api/registros-exercicios</span></button>
+    <button class="route-btn" data-method="POST" data-route="/api/registros-exercicios" data-body='{\n  "tipo": "Corrida",\n  "duracaoMinutos": 30\n}'><span class="m-tag m-POST">POST</span><span class="route-path">/api/registros-exercicios</span></button>
+  </aside>
+
+  <main>
+    <div id="log">
+      <div class="empty-state">Escolha uma rota na barra lateral ou digite o método, a rota e (se precisar) o JSON abaixo, depois clique em Enviar.</div>
+    </div>
+
+    <div id="composer">
+      <div class="composer-row">
+        <select id="method">
+          <option value="GET">GET</option>
+          <option value="POST">POST</option>
+        </select>
+        <input id="route" type="text" placeholder="/api/alimentos" spellcheck="false">
+        <button id="sendBtn">Enviar</button>
+      </div>
+      <textarea id="jsonBody" class="hidden" placeholder='{ "nome": "Banana", "calorias": 89 }'></textarea>
+      <div class="json-error" id="jsonError"></div>
+      <div class="hint">Dica: para GET com filtros, coloque a query string direto na rota, ex: /api/receitas?nome=bolo</div>
+    </div>
+  </main>
+</div>
+
+<script>
+(function () {
+  const baseUrlInput = document.getElementById('baseUrl');
+  const methodSelect = document.getElementById('method');
+  const routeInput = document.getElementById('route');
+  const jsonBody = document.getElementById('jsonBody');
+  const jsonError = document.getElementById('jsonError');
+  const sendBtn = document.getElementById('sendBtn');
+  const log = document.getElementById('log');
+  const clearLogBtn = document.getElementById('clearLog');
+  const sidebar = document.getElementById('sidebar');
+  const overlay = document.getElementById('overlay');
+  const menuBtn = document.getElementById('menuBtn');
+
+  try {
+    const savedBase = localStorage.getItem('nutriplus.baseUrl');
+    if (savedBase) baseUrlInput.value = savedBase;
+  } catch (e) {}
+
+  baseUrlInput.addEventListener('change', () => {
+    try { localStorage.setItem('nutriplus.baseUrl', baseUrlInput.value.trim()); } catch (e) {}
+  });
+
+  function toggleSidebar(open) {
+    sidebar.classList.toggle('open', open);
+    overlay.classList.toggle('open', open);
+  }
+  menuBtn.addEventListener('click', () => toggleSidebar(!sidebar.classList.contains('open')));
+  overlay.addEventListener('click', () => toggleSidebar(false));
+
+  function updateBodyVisibility() {
+    const isGet = methodSelect.value === 'GET';
+    jsonBody.classList.toggle('hidden', isGet);
+    jsonError.textContent = '';
+  }
+  methodSelect.addEventListener('change', updateBodyVisibility);
+  updateBodyVisibility();
+
+  document.querySelectorAll('.route-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      methodSelect.value = btn.dataset.method;
+      routeInput.value = btn.dataset.route;
+      if (btn.dataset.body) {
+        jsonBody.value = btn.dataset.body.replace(/\\n/g, '\n');
+      } else if (btn.dataset.method === 'POST') {
+        jsonBody.value = '';
+      }
+      updateBodyVisibility();
+      toggleSidebar(false);
+      routeInput.focus();
+    });
+  });
+
+  function escapeHtml(str) {
+    return String(str)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;');
+  }
+
+  function addBubble(kind, html) {
+    const emptyState = log.querySelector('.empty-state');
+    if (emptyState) emptyState.remove();
+    const div = document.createElement('div');
+    div.className = 'bubble ' + kind;
+    div.innerHTML = html;
+    log.appendChild(div);
+    log.scrollTop = log.scrollHeight;
+    return div;
+  }
+
+  function prettyBody(text) {
+    try {
+      return JSON.stringify(JSON.parse(text), null, 2);
+    } catch (e) {
+      return text;
+    }
+  }
+
+  async function send() {
+    const base = baseUrlInput.value.trim().replace(/\/+$/, '');
+    const method = methodSelect.value;
+    let route = routeInput.value.trim();
+    if (!route) { routeInput.focus(); return; }
+    if (!route.startsWith('/')) route = '/' + route;
+
+    let bodyText = null;
+    if (method === 'POST') {
+      bodyText = jsonBody.value.trim();
+      if (bodyText) {
+        try {
+          JSON.parse(bodyText);
+          jsonError.textContent = '';
+        } catch (e) {
+          jsonError.textContent = 'JSON inválido: ' + e.message;
+          return;
+        }
+      }
+    }
+
+    const requestLines = [method + ' ' + route];
+    if (bodyText) requestLines.push(prettyBody(bodyText));
+    addBubble('request', '<div class="meta">Enviado</div>' + escapeHtml(requestLines.join('\n')));
+
+    sendBtn.disabled = true;
+    const pending = addBubble('response', '<div class="meta status-pending">Aguardando…</div>');
+
+    try {
+      const res = await fetch(base + route, {
+        method,
+        headers: bodyText ? { 'Content-Type': 'application/json' } : {},
+        body: bodyText || undefined
+      });
+
+      const contentType = res.headers.get('content-type') || '';
+      let payload;
+      if (contentType.includes('application/json')) {
+        const json = await res.json().catch(() => null);
+        payload = json === null ? '' : JSON.stringify(json, null, 2);
+      } else {
+        payload = await res.text().catch(() => '');
+      }
+
+      const statusClass = res.ok ? 'status-ok' : 'status-err';
+      pending.className = 'bubble ' + (res.ok ? 'response' : 'error');
+      pending.innerHTML = '<div class="meta"><span class="' + statusClass + '">' + res.status + ' ' + escapeHtml(res.statusText) + '</span></div>' + escapeHtml(payload || '(corpo vazio)');
+    } catch (err) {
+      pending.className = 'bubble error';
+      pending.innerHTML = '<div class="meta"><span class="status-err">Falha na requisição</span></div>' + escapeHtml(err.message + '\n\nVerifique a Base URL, se a API está rodando e se o CORS está liberado para esta origem.');
+    } finally {
+      sendBtn.disabled = false;
+      log.scrollTop = log.scrollHeight;
+    }
+  }
+
+  sendBtn.addEventListener('click', send);
+  routeInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') send();
+  });
+  jsonBody.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) send();
+  });
+
+  clearLogBtn.addEventListener('click', () => {
+    log.innerHTML = '<div class="empty-state">Escolha uma rota na barra lateral ou digite o método, a rota e (se precisar) o JSON abaixo, depois clique em Enviar.</div>';
+  });
+})();
+</script>
+</body>
+</html>

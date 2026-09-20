@@ -13,6 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/receitas")
+@CrossOrigin(origins = "*")
 public class ReceitaController {
 
     private final ReceitaService service;

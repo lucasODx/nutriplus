@@ -12,6 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/metas-nutricionais")
+@CrossOrigin(origins = "*")
 public class MetaNutricionalController {
 
     private final MetaNutricionalService service;

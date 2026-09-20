@@ -12,6 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/registros-exercicios")
+@CrossOrigin(origins = "*")
 public class RegistroExercicioController {
 
     private final RegistroExercicioService service;

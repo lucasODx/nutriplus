@@ -1,7 +1,6 @@
 package com.nutriplus.pratica_nutricional.controller;
 
 import com.nutriplus.pratica_nutricional.dto.*;
-import com.nutriplus.pratica_nutricional.service.AlimentoService;
 import com.nutriplus.pratica_nutricional.service.ContraindicacaoAlimentoService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -12,6 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/contraindicacoes-alimentos")
+@CrossOrigin(origins = "*")
 public class ContraindicacaoAlimentoController {
 
     private final ContraindicacaoAlimentoService service;

@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: mcp_nutriplus_pratica
+  ai:
+    mcp:
+      server:
+        name: mcp_nutriplus_pratica
+        protocol: STREAMABLE
+
+servico:
+  pratica:
+    base-url: ${SERVICO_PRATICA_URL:http://localhost:8083}
+
+server:
+  port: 8080

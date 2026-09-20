@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: mcp_nutriplus_controle
+  ai:
+    mcp:
+      server:
+        name: mcp_nutriplus_controle
+        protocol: STREAMABLE
+
+servico:
+  controle:
+    base-url: ${SERVICO_CONTROLE_URL:http://localhost:8081}
+
+server:
+  port: 8080

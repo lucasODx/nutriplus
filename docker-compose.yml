@@ -65,28 +65,6 @@ services:
         aliases:
           - pratica-nutricional
 
-  mcp_nutriplus:
-    build:
-      context: ./mcp_nutriplus
-      dockerfile: ./Dockerfile
-    container_name: mcp_nutriplus
-    hostname: mcp_nutriplus
-    restart: always
-    volumes:
-      - ./mcp_nutriplus:/service
-    ports:
-      - "8084:8080"
-    environment:
-      SERVICO_CONTROLE_URL: http://controle-nutricional:8080
-      SERVICO_PRATICA_URL: http://pratica-nutricional:8080
-      SERVICO_TABELA_URL: http://tabela-nutricional:8080
-    depends_on:
-      - controle_nutricional
-      - tabela_nutricional
-      - pratica_nutricional
-    networks:
-      - rede-nutriplus
-
   postgres-db:
     image: postgres:16-alpine
     container_name: postgres-db
@@ -107,4 +85,5 @@ volumes:
   pgdata:
 
 networks:
-  rede-nutriplus:
+  rede-nutriplus: 
+    external: true 

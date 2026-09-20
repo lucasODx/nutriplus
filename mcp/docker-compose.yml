@@ -1,0 +1,53 @@
+services:
+
+  mcp_nutriplus_controle:
+    build:
+      context: ./mcp_nutriplus_controle
+      dockerfile: ./Dockerfile
+    container_name: mcp_nutriplus_controle
+    hostname: mcp_nutriplus_controle
+    restart: always
+    volumes:
+      - ./mcp_nutriplus_controle:/service
+    ports:
+      - "8084:8080"
+    environment:
+      SERVICO_CONTROLE_URL: http://controle-nutricional:8080
+    networks:
+      - rede-nutriplus
+
+  mcp_nutriplus_tabela:
+    build:
+      context: ./mcp_nutriplus_tabela
+      dockerfile: ./Dockerfile
+    container_name: mcp_nutriplus_tabela
+    hostname: mcp_nutriplus_tabela
+    restart: always
+    volumes:
+      - ./mcp_nutriplus_tabela:/service
+    ports:
+      - "8085:8080"
+    environment:
+      SERVICO_TABELA_URL: http://tabela-nutricional:8080
+    networks:
+      - rede-nutriplus
+
+  mcp_nutriplus_pratica:
+    build:
+      context: ./mcp_nutriplus_pratica
+      dockerfile: ./Dockerfile
+    container_name: mcp_nutriplus_pratica
+    hostname: mcp_nutriplus_pratica
+    restart: always
+    volumes:
+      - ./mcp_nutriplus_pratica:/service
+    ports:
+      - "8086:8080"
+    environment:
+      SERVICO_PRATICA_URL: http://pratica-nutricional:8080
+    networks:
+      - rede-nutriplus
+
+networks:
+  rede-nutriplus: 
+    external: true 

@@ -7,14 +7,12 @@ import { StreamableHTTPClientTransport } from "@modelcontextprotocol/sdk/client/
 
 import { GoogleGenAI } from "@google/genai";
 
-const MODELO = "gemini-3.1-flash-lite";
+const MODELO = "gemini-3.5-flash-lite";
 const PROMPT = `
 
 PROMPT DE CONTEXTUALIZAÇÃO GERAL AQUI
 
 Você é um assistente de nutrição de um app de registro alimentar e nutrição chamado Nutriplus, o seu nome é NutriBot.
-
-Quando o usuário fizer uma saudação ou iniciar uma conversa contigo, você deve se identificar pelo seu nome e informar que você não é uma pessoa real mas é um assistente virtual.
 
 Quando o usuário solicitar informações sobre alimentos, diario alimentar, metas nutricionais, registros de exercícios, receitas ou contraindicações de alimentos, você deve utilizar as ferramentas MCP disponíveis para obter tais informações. Também é necessário que você identifique quando mais de uma ferramenta é necessária. Você deve obedecer à essas regras:
 
